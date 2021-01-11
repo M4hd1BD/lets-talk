@@ -1,41 +1,28 @@
-const express = require("express");
 const path = require('path');
-const expressEdge = require('express-edge');
+const express = require("express");
+const app = express();
+const { config, engine } = require('express-edge');
 
 // App setup
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8080;
 }
-const app = express();
-const server = app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
-  console.log(`http://localhost:${port}`);
-});
+config({ cache: process.env.NODE_ENV === 'production' });
 
 // Static files
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 //set up edge
-app.use(expressEdge);
+app.use(engine);
+
 app.set('views', __dirname + '/views');
 
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/index.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/index.html'));
-});
-
-app.get('/about.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/about.html'));
-});
-
-app.get('/contact.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/contact.html'));
-});
-
-app.get('/post.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/post.html'));
+const server = app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+  console.log(`http://localhost:${port}`);
 });
