@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require('path');
+const expressEdge = require('express-edge');
 
 // App setup
 let port = process.env.PORT;
@@ -15,8 +16,12 @@ const server = app.listen(port, function () {
 // Static files
 app.use(express.static("public"));
 
+//set up edge
+app.use(expressEdge);
+app.set('views', __dirname + '/views');
+
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/index.html'));
+    res.render('index');
 });
 
 app.get('/index.html', (req, res) => {
