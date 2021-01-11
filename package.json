@@ -1,0 +1,27 @@
+{
+  "name": "lets-talk",
+  "version": "1.0.0",
+  "description": "A blog using nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M4hd1BD/lets-talk.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "M4HD1BD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/M4hd1BD/lets-talk/issues"
+  },
+  "homepage": "https://github.com/M4hd1BD/lets-talk#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "startbootstrap-clean-blog": "^5.0.10"
+  }
+}
