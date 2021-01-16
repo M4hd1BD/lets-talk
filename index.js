@@ -26,8 +26,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', async (req, res) => {
+    const posts = await Post.find({})
+    res.render('index', {
+        posts
+    })
 });
 
 app.get('/posts/new', (req, res) => {
