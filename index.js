@@ -2,6 +2,7 @@ const path = require('path');
 const express = require("express");
 const app = express();
 const { config, engine } = require('express-edge');
+const mongoose = require('mongoose');
 
 // App setup
 let port = process.env.PORT;
@@ -25,4 +26,12 @@ app.get('/', (req, res) => {
 const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
   console.log(`http://localhost:${port}`);
+});
+
+mongoose.connect('mongodb://localhost/node-blog', {useNewUrlParser: true, useUnifiedTopology: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+      console.log("voila!");
 });
