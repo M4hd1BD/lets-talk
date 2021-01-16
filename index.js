@@ -43,6 +43,13 @@ app.post('/posts/store', (req, res) => {
     })
 });
 
+app.get('/post/:id', async (req, res) => {
+    const post = await Post.findById(req.params.id)
+    res.render('post', {
+        post
+    })
+});
+
 const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
   console.log(`http://localhost:${port}`);
