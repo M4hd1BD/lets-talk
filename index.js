@@ -11,6 +11,8 @@ const storePostController = require('./controllers/storePost');
 const getPostController = require('./controllers/getPost');
 const createUserController = require("./controllers/createUser");
 const storeUserController = require('./controllers/storeUser');
+const loginController = require("./controllers/login");
+const loginUserController = require('./controllers/loginUser');
 
 // App setup
 let port = process.env.PORT;
@@ -42,6 +44,8 @@ app.post("/posts/store", storePostController);
 app.get("/post/:id", getPostController);
 app.get("/auth/register", createUserController);
 app.post("/users/register", storeUserController);
+app.get('/auth/login', loginController);
+app.post('/users/login', loginUserController);
 
 const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
