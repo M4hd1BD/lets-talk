@@ -5,10 +5,12 @@ const { config, engine } = require('express-edge');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
-const createPostController = require('./controllers/createPost')
-const homePageController = require('./controllers/homePage')
-const storePostController = require('./controllers/storePost')
-const getPostController = require('./controllers/getPost')
+const createPostController = require('./controllers/createPost');
+const homePageController = require('./controllers/homePage');
+const storePostController = require('./controllers/storePost');
+const getPostController = require('./controllers/getPost');
+const createUserController = require("./controllers/createUser");
+const storeUserController = require('./controllers/storeUser');
 
 // App setup
 let port = process.env.PORT;
@@ -38,6 +40,8 @@ app.get("/", homePageController);
 app.get("/posts/new", createPostController);
 app.post("/posts/store", storePostController);
 app.get("/post/:id", getPostController);
+app.get("/auth/register", createUserController);
+app.post("/users/register", storeUserController);
 
 const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
