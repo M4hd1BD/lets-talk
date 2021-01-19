@@ -4,7 +4,6 @@ const app = express();
 const { config, engine } = require('express-edge');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const Post = require('./database/models/post');
 const fileUpload = require("express-fileupload");
 const createPostController = require('./controllers/createPost')
 const homePageController = require('./controllers/homePage')
