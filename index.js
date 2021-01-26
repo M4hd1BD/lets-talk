@@ -37,13 +37,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(expressSession({
-    secret: 'secret',
-    store: new mongoStore({
-        mongooseConnection: mongoose.connection
-    })
-}));
-
 const storePost = require('./middleware/storePost')
 app.use('/posts/store', storePost)
 
@@ -63,6 +56,12 @@ const server = app.listen(port, function () {
 
 mongoose.connect('mongodb://localhost/node-blog', {useNewUrlParser: true, useUnifiedTopology: true});
 const mongoStore = connectMongo(expressSession);
+app.use(expressSession({
+    secret: 'secret',
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection
+    })
+}));
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
