@@ -1,4 +1,4 @@
-const User = require('../database/models/User')
+const User = require('../database/models/user')
 
 module.exports = (req, res, next) => {
     if (req.session.userId) {
