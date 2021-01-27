@@ -16,6 +16,7 @@ const loginUserController = require('./controllers/loginUser');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const auth = require("./middleware/auth");
+const connectFlash = require("connect-flash");
 
 // App setup
 let port = process.env.PORT;
@@ -29,6 +30,7 @@ app.use(express.static('public'));
 
 //set up edge
 app.use(engine);
+app.use(connectFlash());
 
 app.use(fileUpload());
 app.set('views', __dirname + '/views');
