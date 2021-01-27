@@ -21,6 +21,7 @@ const redirectIfAuthenticated = require('./middleware/redirectIfAuthenticated')
 const connectFlash = require("connect-flash");
 const storePost = require('./middleware/storePost')
 const logoutController = require("./controllers/logout");
+const notFoundController = require("./controllers/notFound");
 
 // App setup
 let port = process.env.PORT;
@@ -71,3 +72,4 @@ app.post("/users/login", redirectIfAuthenticated, loginUserController);
 app.get("/auth/register", redirectIfAuthenticated, createUserController);
 app.post("/users/register", redirectIfAuthenticated, storeUserController);
 app.get("/auth/logout", logoutController);
+app.get("/*", notFoundController);
