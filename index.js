@@ -16,6 +16,7 @@ const loginUserController = require('./controllers/loginUser');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const auth = require("./middleware/auth");
+const redirectIfAuthenticated = require('./middleware/redirectIfAuthenticated')
 const connectFlash = require("connect-flash");
 
 // App setup
@@ -52,13 +53,13 @@ const storePost = require('./middleware/storePost')
 app.use('/posts/store', storePost)
 
 app.get("/", homePageController);
-app.get("/posts/new", auth, createPostController);
-app.post("/posts/store", storePostController);
 app.get("/post/:id", getPostController);
-app.get("/auth/register", createUserController);
-app.post("/users/register", storeUserController);
-app.get('/auth/login', loginController);
-app.post('/users/login', loginUserController);
+app.get("/posts/new", auth, createPostController);
+app.post("/posts/store", auth, storePost, storePostController);
+app.get("/auth/login", redirectIfAuthenticated, loginController);
+app.post("/users/login", redirectIfAuthenticated, loginUserController);
+app.get("/auth/register", redirectIfAuthenticated, createUserController);
+app.post("/users/register", redirectIfAuthenticated, storeUserController);
 
 const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
