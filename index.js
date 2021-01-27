@@ -2,6 +2,7 @@ const path = require('path');
 const express = require("express");
 const app = express();
 const { config, engine } = require('express-edge');
+const edge = require("edge.js");
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
@@ -18,6 +19,7 @@ const connectMongo = require('connect-mongo');
 const auth = require("./middleware/auth");
 const redirectIfAuthenticated = require('./middleware/redirectIfAuthenticated')
 const connectFlash = require("connect-flash");
+const storePost = require('./middleware/storePost')
 
 // App setup
 let port = process.env.PORT;
@@ -26,20 +28,10 @@ if (port == null || port == "") {
 }
 config({ cache: process.env.NODE_ENV === 'production' });
 
-// Static files
-app.use(express.static('public'));
-
-//set up edge
-app.use(engine);
-app.use(connectFlash());
-
-app.use(fileUpload());
-app.set('views', __dirname + '/views');
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+const server = app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+  console.log(`http://localhost:${port}`);
+});
 mongoose.connect('mongodb://localhost/node-blog', {useNewUrlParser: true, useUnifiedTopology: true});
 const mongoStore = connectMongo(expressSession);
 app.use(expressSession({
@@ -48,9 +40,26 @@ app.use(expressSession({
         mongooseConnection: mongoose.connection
     })
 }));
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+      console.log("voila!");
+});
 
-const storePost = require('./middleware/storePost')
-app.use('/posts/store', storePost)
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(express.static('public'));
+app.set('views', __dirname + '/views');
+app.use(engine);
+app.use(connectFlash());
+app.use(fileUpload());
+app.use('*', (req, res, next) => {
+    edge.global('auth', req.session.userId)
+    next()
+});
 
 app.get("/", homePageController);
 app.get("/post/:id", getPostController);
@@ -60,14 +69,3 @@ app.get("/auth/login", redirectIfAuthenticated, loginController);
 app.post("/users/login", redirectIfAuthenticated, loginUserController);
 app.get("/auth/register", redirectIfAuthenticated, createUserController);
 app.post("/users/register", redirectIfAuthenticated, storeUserController);
-
-const server = app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
-  console.log(`http://localhost:${port}`);
-});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-      console.log("voila!");
-});
