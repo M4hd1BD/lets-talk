@@ -15,6 +15,7 @@ const loginController = require("./controllers/login");
 const loginUserController = require('./controllers/loginUser');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
+const auth = require("./middleware/auth");
 
 // App setup
 let port = process.env.PORT;
