@@ -65,6 +65,7 @@ app.use('*', (req, res, next) => {
 
 app.get("/", homePageController);
 app.get("/post/:id", getPostController);
+app.get("/posts/:page", homePageController);
 app.get("/posts/new", auth, createPostController);
 app.post("/posts/store", auth, storePost, storePostController);
 app.get("/auth/login", redirectIfAuthenticated, loginController);
