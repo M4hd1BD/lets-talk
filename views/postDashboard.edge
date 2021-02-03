@@ -1,5 +1,75 @@
 @layout('layouts.app')
 
 @section('content')
+  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Clean Blog</h1>
+            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="row">
+
+    <div class="col-lg-8 col-md-10 mx-auto">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Date</th>
+            <th scope="col">Title</th>
+            <th scope="col">Content</th>
+            <th scope="col">Approved?</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @each(post in posts)
+            <tr>
+              <td> {{ post.id }}</td>
+              <td> {{ post.username }}</td>
+              <td> {{ post.createdAt.toDateString() }}</td>
+              <td> {{ post.title }} </td>
+              <td> {{ post.content }} </td>
+              <td>
+                @if(post.approved == true)
+                <form class="" action="/dashboard/toggleApproval" method="post" encType="multipart/form-data">
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="{{post.id}}" name="id">
+                  </div>
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="Disapprove"name="toDo">
+                  </div>
+                  <button class="btn btn-primary">Disapprove</button>
+                </form>
+                @else
+                <form class="" action="/dashboard/toggleApproval" method="post" encType="multipart/form-data">
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="{{post.id}}" name="id">
+                  </div>
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="Approve" name="toDo">
+                  </div>
+                  <button class="btn btn-primary">Approve</button>
+                </form>
+                @endif
+              </td>
+            </tr>
+          @endeach
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
 
 @endsection

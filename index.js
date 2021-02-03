@@ -22,6 +22,8 @@ const connectFlash = require("connect-flash");
 const storePost = require('./middleware/storePost')
 const logoutController = require("./controllers/logout");
 const notFoundController = require("./controllers/notFound");
+const postDashboardController = require("./controllers/postDashboard");
+const toggleApprovalController = require("./controllers/toggleApproval");
 
 // App setup
 let port = process.env.PORT;
@@ -73,4 +75,6 @@ app.post("/users/login", redirectIfAuthenticated, loginUserController);
 app.get("/auth/register", redirectIfAuthenticated, createUserController);
 app.post("/users/register", redirectIfAuthenticated, storeUserController);
 app.get("/auth/logout", logoutController);
+app.get("/dashboard/posts", postDashboardController);
+app.post("/dashboard/toggleApproval", toggleApprovalController);
 app.get("/*", notFoundController);

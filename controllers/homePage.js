@@ -6,13 +6,13 @@ module.exports = async (req, res) => {
 
   try {
     // execute query with page and limit values
-    const posts = await Posts.find()
+    const posts = await Posts.find( {approved: true} )
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
 
     // get total documents in the Posts collection
-    const count = await Posts.countDocuments();
+    const count = await Posts.countDocuments( {approved: true} );
     const total = Math.ceil(count / limit);
     var tpgs = [];
 

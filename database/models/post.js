@@ -9,7 +9,8 @@ const PostSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date()
-    }
+    },
+    approved: Boolean
 });
 
 const Post = mongoose.model('Post', PostSchema);
