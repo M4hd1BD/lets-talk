@@ -1,0 +1,73 @@
+@layout('layouts.app')
+
+@section('content')
+  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Clean Blog</h1>
+            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="row">
+
+    <div class="col-lg-8 col-md-10 mx-auto">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <!-- <th scope="col">No. of Posts</th> -->
+            <th scope="col">Admin?</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @each(user in users)
+            <tr>
+              <td> <a href="/users/{{ user.id }}">{{ user.id }}</a></td>
+              <td> {{ user.username }}</td>
+              <td> {{ user.email }}</td>
+              <!-- <td> {{ user.postCount }} </td> -->
+              <td>
+                @if(user.administrator == 'true')
+                <form class="" action="/dashboard/toggleAdmin" method="post" encType="multipart/form-data">
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="{{user.id}}" name="id">
+                  </div>
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="Demote" name="toDo">
+                  </div>
+                  <button class="btn btn-primary">Demote</button>
+                </form>
+                @else
+                <form class="" action="/dashboard/toggleAdmin" method="post" encType="multipart/form-data">
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="{{user.id}}" name="id">
+                  </div>
+                  <div class="input-group flex-nowrap d-none">
+                    <input type="text" class="form-control" aria-describedby="addon-wrapping" value="Promote" name="toDo">
+                  </div>
+                  <button class="btn btn-primary">Promote</button>
+                </form>
+                @endif
+              </td>
+            </tr>
+          @endeach
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+@endsection
