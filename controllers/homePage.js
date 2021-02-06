@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   const total = Math.ceil(count / limit);
 
   if (page > total) {
-    res.redirect("/notfound");
+    res.redirect("/404");
   }
   else {
     try {
@@ -37,6 +37,6 @@ module.exports = async (req, res) => {
       });
     } catch (err) {
       console.error(err.message);
-    }  
+    }
   }
 }

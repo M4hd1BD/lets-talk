@@ -24,6 +24,7 @@ const logoutController = require("./controllers/logout");
 const notFoundController = require("./controllers/notFound");
 const postDashboardController = require("./controllers/postDashboard");
 const toggleApprovalController = require("./controllers/toggleApproval");
+const randomPageController = require("./controllers/randomPage");
 
 // App setup
 let port = process.env.PORT;
@@ -77,4 +78,5 @@ app.post("/users/register", redirectIfAuthenticated, storeUserController);
 app.get("/auth/logout", logoutController);
 app.get("/dashboard/posts", postDashboardController);
 app.post("/dashboard/toggleApproval", toggleApprovalController);
-app.get("/*", notFoundController);
+app.get("/404", notFoundController);
+app.get("/*", randomPageController);
