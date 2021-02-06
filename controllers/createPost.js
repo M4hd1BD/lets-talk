@@ -1,7 +1,15 @@
-module.exports = (req, res) => {
-    if (req.session.userId) {
-        return res.render("create");
-    }
+const Users = require('../database/models/user')
 
-    res.redirect('/auth/login')
-};
+module.exports = (req, res) => {
+    Users.findById(req.session.userId, function(err, user) {
+      if (err) {
+        console.log(err);
+        res.redirect('/')
+      }
+      else {
+        res.render("create", {
+            user
+        });
+      }
+    });
+}
