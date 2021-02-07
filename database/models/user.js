@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    administrator: String
+    administrator: Boolean
 })
 
 UserSchema.pre('save', function (next) {

@@ -38,7 +38,7 @@
               <td> {{ user.email }}</td>
               <!-- <td> {{ user.postCount }} </td> -->
               <td>
-                @if(user.administrator == 'true')
+                @if(user.administrator == true)
                 <form class="" action="/dashboard/toggleAdmin" method="post" encType="multipart/form-data">
                   <div class="input-group flex-nowrap d-none">
                     <input type="text" class="form-control" aria-describedby="addon-wrapping" value="{{user.id}}" name="id">
