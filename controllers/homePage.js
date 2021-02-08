@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   const count = await Posts.countDocuments( {approved: true} );
   const total = Math.ceil(count / limit);
 
-  if (page > total) {
+  if (page > total && total != 0) {
     res.redirect("/404");
   }
   else {
