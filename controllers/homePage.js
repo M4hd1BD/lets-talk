@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   else {
     try {
       // execute query with page and limit values
-      const posts = await Posts.find( {approved: true} )
+      const posts = await Posts.find( {approved: true} ).sort({createdAt: -1})
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
