@@ -6,9 +6,17 @@
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="col-4">
+        <div class="">
+          <img src="{{ user.profilePic }}" alt="Profile Picture" class="w-100 h-100">
+        </div>
+      </div>
+      <div class="col-8 mx-auto">
         <div class="site-heading">
-          <h1>{{ username }}</h1>
+          <h1>{{ user.username }}</h1>
+          @if(auth == user._id)
+            <a href="/profile/{{ user.username }}/edit">Edit Profile</a>
+          @endif
         </div>
       </div>
     </div>
