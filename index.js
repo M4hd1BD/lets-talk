@@ -30,6 +30,9 @@ const toggleAdminController = require("./controllers/toggleAdmin");
 const permCheck = require("./middleware/permCheck");
 const userProfileController = require("./controllers/userProfile");
 const userCheck = require("./middleware/checkUser");
+const editProfileController = require('./controllers/editProfile');
+const editUserController = require('./controllers/editUser');
+const ifUser = require('./middleware/ifUser');
 
 // App setup
 let port = process.env.PORT;
@@ -85,6 +88,8 @@ app.get("/dashboard/posts", permCheck, postDashboardController);
 app.get("/dashboard/users", permCheck, userDashboardController);
 app.post("/dashboard/toggleApproval", toggleApprovalController);
 app.post("/dashboard/toggleAdmin", toggleAdminController);
+app.post("/editProfile", editUserController);
 app.get("/profile/:user", userCheck, userProfileController);
+app.get("/profile/:user/edit", ifUser, editProfileController);
 app.get("/404", notFoundController);
 app.get("/*", randomPageController);
