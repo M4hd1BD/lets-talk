@@ -45,7 +45,7 @@ const server = app.listen(port, function () {
   console.log(`Listening on port ${port}`);
   console.log(`http://localhost:${port}`);
 });
-mongoose.connect('mongodb://localhost/node-blog', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('process.env.mainDB', {useNewUrlParser: true, useUnifiedTopology: true});
 const mongoStore = connectMongo(expressSession);
 app.use(expressSession({
     secret: 'secret',
