@@ -33,6 +33,7 @@ const userCheck = require("./middleware/checkUser");
 const editProfileController = require('./controllers/editProfile');
 const editUserController = require('./controllers/editUser');
 const ifUser = require('./middleware/ifUser');
+const searchController = require('./controllers/search');
 
 // App setup
 let port = process.env.PORT;
@@ -96,5 +97,6 @@ app.post("/dashboard/toggleAdmin", toggleAdminController);
 app.post("/editProfile", editUserController);
 app.get("/profile/:user", userCheck, userProfileController);
 app.get("/profile/:user/edit", ifUser, editProfileController);
+app.get('/search?:query', searchController);
 app.get("/404", notFoundController);
 app.get("/*", randomPageController);
