@@ -37,15 +37,20 @@ const ifUser = require('./middleware/ifUser');
 // App setup
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 8080;
+    port = 8080;
 }
 config({ cache: process.env.NODE_ENV === 'production' });
 
-const server = app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
-  console.log(`http://localhost:${port}`);
+const server = app.listen(port, function() {
+    console.log(`Listening on port ${port}`);
+    console.log(`http://localhost:${port}`);
 });
-mongoose.connect('process.env.mainDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+let mongoConfig = process.env.mainDB;
+if (mongoConfig == null || mongoConfig == "") {
+    mongoConfig = 'mongodb://localhost/node-blog';
+}
+mongoose.connect(mongoConfig, { useNewUrlParser: true, useUnifiedTopology: true });
 const mongoStore = connectMongo(expressSession);
 app.use(expressSession({
     secret: 'secret',
@@ -56,7 +61,7 @@ app.use(expressSession({
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-      console.log("voila!");
+    console.log("voila!");
 });
 
 
